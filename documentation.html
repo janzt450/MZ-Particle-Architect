@@ -1,0 +1,376 @@
+<!-- 
+  =============================================================================
+  !!! MAINTENANCE FLAG: READ BEFORE EDITING !!!
+  
+  DO NOT UPDATE, MODIFY, OR READ THIS FILE INTO CONTEXT FOR GENERAL QUERIES.
+  
+  THIS FILE IS ON A SEMI-ANNUAL UPDATE CYCLE. 
+  ONLY MODIFY THIS FILE IF THE USER EXPLICITLY REQUESTS A "DOCUMENTATION UPDATE".
+  
+  PRESERVE THIS HEADER AT ALL COSTS.
+  =============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZ Babylon Particle Architect - Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        h1, h2, h3 { letter-spacing: -0.025em; }
+        
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        
+        .code-block {
+            background-color: #18181b;
+            color: #e4e4e7;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            border: 1px solid #27272a;
+        }
+
+        .note {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            color: #1e40af;
+            font-size: 0.95rem;
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+
+        .warn {
+            background-color: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 1rem;
+            color: #9a3412;
+            font-size: 0.95rem;
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800 antialiased leading-relaxed">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- MINI ICON SVG -->
+                <svg width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="512" height="512" rx="100" fill="url(#paint0_linear)"/>
+                    <path d="M256 420L96 340L416 340L256 420Z" fill="url(#grid_grad)" opacity="0.5"/>
+                    <path d="M256 420V200" stroke="#3B82F6" stroke-width="20" stroke-linecap="round"/>
+                    <path d="M256 420L130 480" stroke="#EF4444" stroke-width="20" stroke-linecap="round"/>
+                    <path d="M256 420L380 480" stroke="#22C55E" stroke-width="20" stroke-linecap="round"/>
+                    <circle cx="256" cy="300" r="40" fill="#FBBF24" style="mix-blend-mode: screen"/>
+                    <circle cx="220" cy="240" r="30" fill="#60A5FA" style="mix-blend-mode: screen"/>
+                    <circle cx="290" cy="260" r="35" fill="#F87171" style="mix-blend-mode: screen"/>
+                    <circle cx="256" cy="180" r="25" fill="#A78BFA" style="mix-blend-mode: screen"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#374151"/>
+                            <stop offset="1" stop-color="#111827"/>
+                        </linearGradient>
+                        <linearGradient id="grid_grad" x1="256" y1="340" x2="256" y2="420" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="white" stop-opacity="0.2"/>
+                            <stop offset="1" stop-color="white" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="font-bold text-zinc-900 tracking-tight">MZ Particle Architect</span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-zinc-500">
+                <a href="#quickstart" class="hover:text-indigo-600 transition-colors">Quick Start</a>
+                <a href="#workflow" class="hover:text-indigo-600 transition-colors">Workflow</a>
+                <a href="#commands" class="hover:text-indigo-600 transition-colors">Commands</a>
+                <a href="#troubleshooting" class="hover:text-indigo-600 transition-colors">Troubleshooting</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="bg-white border-b border-zinc-200 pt-16 pb-20">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            
+            <!-- MAIN ICON SVG -->
+            <div class="w-32 h-32 mx-auto mb-8 shadow-2xl rounded-[2rem] transform hover:scale-105 transition-transform duration-300">
+                <svg width="100%" height="100%" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background -->
+                    <rect width="512" height="512" rx="100" fill="url(#main_bg_grad)"/>
+                    <rect x="10" y="10" width="492" height="492" rx="90" stroke="white" stroke-opacity="0.1" stroke-width="4"/>
+                    
+                    <!-- 3D Grid Floor -->
+                    <path d="M256 440L60 360L452 360L256 440Z" fill="url(#main_grid_grad)" opacity="0.3"/>
+                    <path d="M158 400L158 360M354 400L354 360M256 440L256 360" stroke="white" stroke-opacity="0.2" stroke-width="2"/>
+                    
+                    <!-- Axes -->
+                    <path d="M256 420V250" stroke="#3B82F6" stroke-width="16" stroke-linecap="round"/> <!-- Z/Up -->
+                    <path d="M256 420L100 480" stroke="#EF4444" stroke-width="16" stroke-linecap="round"/> <!-- X -->
+                    <path d="M256 420L412 480" stroke="#22C55E" stroke-width="16" stroke-linecap="round"/> <!-- Y -->
+                    <text x="265" y="240" fill="#3B82F6" font-family="monospace" font-weight="bold" font-size="40">Z</text>
+                    <text x="80" y="470" fill="#EF4444" font-family="monospace" font-weight="bold" font-size="40">X</text>
+                    <text x="420" y="470" fill="#22C55E" font-family="monospace" font-weight="bold" font-size="40">Y</text>
+
+                    <!-- Particles -->
+                    <circle cx="256" cy="320" r="30" fill="url(#p_yellow)" filter="url(#glow)"/>
+                    <circle cx="220" cy="260" r="25" fill="url(#p_blue)" filter="url(#glow)"/>
+                    <circle cx="300" cy="270" r="28" fill="url(#p_red)" filter="url(#glow)"/>
+                    <circle cx="256" cy="180" r="20" fill="url(#p_purple)" filter="url(#glow)"/>
+                    <circle cx="280" cy="140" r="15" fill="url(#p_yellow)" opacity="0.8" filter="url(#glow)"/>
+
+                    <defs>
+                        <linearGradient id="main_bg_grad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#27272a"/>
+                            <stop offset="1" stop-color="#09090b"/>
+                        </linearGradient>
+                        <linearGradient id="main_grid_grad" x1="256" y1="360" x2="256" y2="440" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="white" stop-opacity="0.3"/>
+                            <stop offset="1" stop-color="white" stop-opacity="0"/>
+                        </linearGradient>
+                        <radialGradient id="p_yellow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 320) rotate(90) scale(30)">
+                            <stop stop-color="#FCD34D"/>
+                            <stop offset="1" stop-color="#F59E0B"/>
+                        </radialGradient>
+                        <radialGradient id="p_blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(220 260) rotate(90) scale(25)">
+                            <stop stop-color="#60A5FA"/>
+                            <stop offset="1" stop-color="#2563EB"/>
+                        </radialGradient>
+                        <radialGradient id="p_red" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(300 270) rotate(90) scale(28)">
+                            <stop stop-color="#F87171"/>
+                            <stop offset="1" stop-color="#DC2626"/>
+                        </radialGradient>
+                        <radialGradient id="p_purple" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 180) rotate(90) scale(20)">
+                            <stop stop-color="#A78BFA"/>
+                            <stop offset="1" stop-color="#7C3AED"/>
+                        </radialGradient>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+            </div>
+
+            <h1 class="text-4xl font-bold text-zinc-900 mb-4">MZ Babylon Particle Architect</h1>
+            <p class="text-lg text-zinc-600 max-w-2xl mx-auto">
+                A visual design tool powered by Gemini AI to generate high-performance Babylon.js particle effects for RPG Maker MZ/MV3D.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
+
+        <!-- INSTALLATION -->
+        <section id="quickstart">
+            <h2 class="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm">1</span>
+                Quick Start & Installation
+            </h2>
+            
+            <div class="prose prose-zinc max-w-none text-zinc-600">
+                <p>To use the effects generated by this tool, you need to install the Core Plugin into your RPG Maker project.</p>
+                
+                <ol class="list-decimal pl-5 space-y-4 mt-4">
+                    <li>
+                        <strong>Download the Core Plugin:</strong>
+                        <br>In the app's right-hand panel, click the <span class="bg-zinc-100 px-2 py-0.5 rounded text-zinc-800 font-mono text-xs border border-zinc-300">CORE PLUGIN</span> button.
+                        <br>Save <code>BabylonParticle_Core.js</code> to your project's <code>js/plugins/</code> folder.
+                    </li>
+                    <li>
+                        <strong>Create Data Folder:</strong>
+                        <br>Navigate to your project folder: <code>data/</code>.
+                        <br>Create a new folder named <code>particles</code>.
+                        <br>Result: <code>YourProject/data/particles/</code>.
+                    </li>
+                    <li>
+                        <strong>Enable Plugin:</strong>
+                        <br>Open RPG Maker MZ Plugin Manager.
+                        <br>Turn ON <code>BabylonParticle_Core</code>.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- WORKFLOW -->
+        <section id="workflow">
+            <h2 class="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm">2</span>
+                Design Workflow
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-zinc-900 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        AI Wizard (Gemini)
+                    </h3>
+                    <p class="text-zinc-600 text-sm">
+                        Use natural language to describe what you want.
+                        <br><br>
+                        <em>"A swirling vortex of purple fire."</em><br>
+                        <em>"Gentle falling snow that fades out."</em>
+                    </p>
+                    <div class="note">
+                        <strong>Pro Tip:</strong> Check "Force New Shape" to have the AI draw a unique SVG icon for your particle (e.g., a sword, a leaf, a rune) instead of using standard textures.
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="font-bold text-zinc-900 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                        Manual Controls
+                    </h3>
+                    <p class="text-zinc-600 text-sm">
+                        Fine-tune every aspect of the system.
+                    </p>
+                    <ul class="list-disc pl-5 text-sm text-zinc-600 space-y-1">
+                        <li><strong>Emitter:</strong> Point, Box, or Floor shapes.</li>
+                        <li><strong>Flow:</strong> Omni, Up, Down, or Jet streams.</li>
+                        <li><strong>Color:</strong> Simple gradients or Advanced Multi-stop Ramps.</li>
+                        <li><strong>Turbulence:</strong> Add noise to simulate smoke/wind.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-8 p-6 bg-zinc-50 border border-zinc-200 rounded-lg">
+                <h3 class="font-bold text-zinc-900 mb-2">Exporting Effects</h3>
+                <p class="text-zinc-600 text-sm mb-4">Once you are happy with your effect:</p>
+                <ol class="list-decimal pl-5 text-sm text-zinc-600 space-y-2">
+                    <li>Give it a unique name (e.g., <code>BossAura</code>).</li>
+                    <li>Click <strong>Save Preset</strong>.</li>
+                    <li>In the right panel, find your effect under "Export Effect Data".</li>
+                    <li>Click <strong>JSON</strong> to download <code>BossAura.json</code>.</li>
+                    <li>Place this file in <code>data/particles/</code>.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- COMMANDS -->
+        <section id="commands">
+            <h2 class="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm">3</span>
+                Plugin Commands
+            </h2>
+
+            <div class="space-y-8">
+                
+                <!-- PlayBabylonEffect -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-mono font-bold text-indigo-600">PlayBabylonEffect</h3>
+                    <p class="text-zinc-600 text-sm">Spawns a particle system from a JSON file.</p>
+                    
+                    <div class="overflow-hidden rounded-lg border border-zinc-200">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-zinc-100 text-zinc-700 font-bold">
+                                <tr>
+                                    <th class="p-3">Argument</th>
+                                    <th class="p-3">Description</th>
+                                    <th class="p-3">Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-zinc-200">
+                                <tr>
+                                    <td class="p-3 font-mono text-indigo-600">file</td>
+                                    <td class="p-3">Filename without extension.</td>
+                                    <td class="p-3 text-zinc-500">Fire</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-indigo-600">mode</td>
+                                    <td class="p-3"><code>world</code> (3D) or <code>screen</code> (2D UI).</td>
+                                    <td class="p-3 text-zinc-500">world</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-indigo-600">eventId</td>
+                                    <td class="p-3">Target Event ID. 0 for Player.</td>
+                                    <td class="p-3 text-zinc-500">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-indigo-600">duration</td>
+                                    <td class="p-3">Time in seconds. <code>-1</code> for Infinite.</td>
+                                    <td class="p-3 text-zinc-500">-1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- StopBabylonEffect -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-mono font-bold text-indigo-600">StopBabylonEffect</h3>
+                    <p class="text-zinc-600 text-sm">Removes particles from an event or the screen.</p>
+                    <div class="code-block">
+StopBabylonEffect
+  Target: Event 1
+  Method: Natural (Fades out based on particle lifetime)
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TROUBLESHOOTING -->
+        <section id="troubleshooting">
+            <h2 class="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                <span class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm">4</span>
+                Troubleshooting & Tips
+            </h2>
+
+            <div class="space-y-4">
+                <div class="warn">
+                    <strong>Issue: Particles appear BEHIND the Skybox/Parallax</strong>
+                    <p class="mt-2 text-sm text-orange-900">
+                        This is a common issue in MZ3D due to transparency sorting order.
+                        <br><strong>Fix:</strong> The Core Plugin attempts to fix this automatically. If it persists:
+                        <br>1. Press <code>Ctrl + I</code> in-game to open the Babylon Inspector.
+                        <br>2. Check if your Skybox mesh name contains "skybox" or "parallax".
+                        <br>3. Ensure the plugin is updated.
+                    </p>
+                </div>
+
+                <div class="bg-zinc-50 p-4 rounded border border-zinc-200">
+                    <h4 class="font-bold text-zinc-900 text-sm mb-2">Pre-Warm Cycles</h4>
+                    <p class="text-sm text-zinc-600">
+                        If your infinite effect (like rain or fog) "pops" into existence when the map loads, increase the <strong>Pre-Warm Cycles</strong> in the Physics tab.
+                        <br>Formula: <code>Cycles ≈ Lifetime / Speed</code>.
+                    </p>
+                </div>
+
+                <div class="bg-zinc-50 p-4 rounded border border-zinc-200">
+                    <h4 class="font-bold text-zinc-900 text-sm mb-2">Performance</h4>
+                    <p class="text-sm text-zinc-600">
+                        Keep <strong>Capacity</strong> under 2000 for mobile devices.
+                        <br>Use <strong>Simple Colors</strong> instead of Ramp Gradients if you have many simultaneous effects.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-zinc-200 mt-20 py-12 bg-zinc-50">
+        <div class="max-w-4xl mx-auto px-6 text-center text-zinc-400 text-sm">
+            <p>&copy; 2025 MZ Particle Architect. All rights reserved.</p>
+            <p class="mt-2">Documentation Version 1.1</p>
+        </div>
+    </footer>
+
+</body>
+</html>
