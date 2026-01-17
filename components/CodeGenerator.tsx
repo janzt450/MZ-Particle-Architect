@@ -315,25 +315,52 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
           </div>
         </Modal>
 
-        {/* About Modal */}
+        {/* About Modal - Redesigned to match requested style */}
         <Modal 
           isOpen={activeModal === 'about'} 
           onClose={() => setActiveModal(null)} 
           title="Architect" 
           icon={Sparkles}
+          maxWidth="max-w-md"
         >
-          <div className="mt-4 text-zinc-400 text-sm leading-relaxed max-w-xs text-center">
-            <p className="mb-6 italic font-medium leading-normal">"Empowering creators to shape the elements of their worlds through generative intelligence and high-performance rendering."</p>
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-zinc-800">
-               <div className="text-center group">
-                  <div className="text-white font-black text-2xl group-hover:scale-110 transition-transform">7.43</div>
-                  <div className="text-[10px] uppercase font-bold tracking-widest text-zinc-600 mt-1">Babylon Engine</div>
-               </div>
-               <div className="text-center group">
-                  <div className="text-white font-black text-2xl group-hover:scale-110 transition-transform">Stable</div>
-                  <div className="text-[10px] uppercase font-bold tracking-widest text-zinc-600 mt-1">Production</div>
-               </div>
-            </div>
+          <div className="w-full flex flex-col items-center">
+             <h3 className="text-lg font-bold text-white -mt-2">MZ Particle Architect</h3>
+             <p className="text-zinc-500 text-xs font-medium uppercase tracking-widest mb-6">Open Source VFX Tool</p>
+
+             <div className="text-zinc-400 text-sm leading-relaxed space-y-4 text-left">
+                <p>
+                    Built to empower RPG Maker developers to create high-performance 3D particle systems without needing to master complex code.
+                </p>
+                <p>
+                    Unlike many proprietary tools, this exists solely to fuel your creativity. All presets and textures are stored locally on your device. We do not track your usage, store your designs on servers, or harvest your data.
+                </p>
+             </div>
+
+             <div className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 mt-6">
+                 <div className="flex items-center gap-2 mb-3">
+                     <Shield size={16} className="text-green-500" />
+                     <span className="text-white font-bold text-sm">Privacy Promise</span>
+                 </div>
+                 <ul className="space-y-2">
+                     {['No Account Required', 'Local Storage Only', 'No Ad Tracking', 'Open Source Code'].map(item => (
+                         <li key={item} className="flex items-center gap-2 text-xs text-zinc-400">
+                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]"></div>
+                             {item}
+                         </li>
+                     ))}
+                 </ul>
+             </div>
+
+             <div className="w-full bg-red-500/10 border border-red-500/20 rounded-xl p-4 mt-4 flex items-start gap-3">
+                 <AlertTriangle size={20} className="text-red-400 shrink-0 mt-0.5" />
+                 <p className="text-red-300 text-xs leading-relaxed font-medium">
+                     This tool is free and open source. It is never intended to be sold, bartered, or traded. Free forever.
+                 </p>
+             </div>
+
+             <div className="mt-8 text-center">
+                 <p className="text-zinc-600 text-[10px] font-mono">Version 1.0.0 • Built with React & Babylon.js</p>
+             </div>
           </div>
         </Modal>
 
