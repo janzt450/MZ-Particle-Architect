@@ -13,7 +13,7 @@ import {
   LinesMesh,
   UtilityLayerRenderer,
   TransformNode
-} from 'babylonjs';
+} from '@babylonjs/core';
 import { ParticleConfig } from '../types';
 import { Play, Pause, RotateCcw, Grid, Sun, Moon, Monitor, Minimize2 } from 'lucide-react';
 

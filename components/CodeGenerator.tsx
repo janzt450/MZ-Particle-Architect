@@ -6,13 +6,15 @@ import {
   CheckCircle2, Cuboid, Monitor, Eye, Ruler, Bug, Scale, Zap, 
   Layers, Package, FolderOpen, Share2, Github, Shield, BrainCircuit, 
   Compass, X, Sparkles, Heart, Rocket, ExternalLink, Library, Map,
-  Globe, Smartphone, Code2, Check, Bot
+  Globe, Smartphone, Code2, Check, Bot, LogOut
 } from 'lucide-react';
 
 interface ExportPanelProps {
   config: ParticleConfig;
   presets: ParticleConfig[];
 }
+
+const GITHUB_URL = "https://github.com/janzt450/MZ-Particle-Architect";
 
 const Modal = ({ isOpen, onClose, title, icon: Icon, children, maxWidth = "max-w-md" }: { isOpen: boolean, onClose: () => void, title: string, icon: any, children?: React.ReactNode, maxWidth?: string }) => {
   if (!isOpen) return null;
@@ -48,6 +50,10 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
   const [selectedPresetNames, setSelectedPresetNames] = useState<string[]>([]);
   const [activeModal, setActiveModal] = useState<'ai' | 'privacy' | 'about' | 'roadmap' | 'share' | null>(null);
   const [copied, setCopied] = useState(false);
+  
+  // External Link Warning State
+  const [pendingExternalUrl, setPendingExternalUrl] = useState<string | null>(null);
+  const [externalCopied, setExternalCopied] = useState(false);
 
   useEffect(() => {
       const exists = presets.find(p => p.name === config.name);
@@ -94,6 +100,29 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
     navigator.clipboard.writeText("https://outlandproductions.neocities.org");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  // --- External Link Handler ---
+  const handleExternalLink = (url: string) => {
+      // Check localStorage to see if user has already acknowledged the external link notice
+      const hasSeenNotice = localStorage.getItem('mz_external_notice_seen');
+      
+      if (hasSeenNotice === 'true') {
+          // If already seen, open immediately
+          window.open(url, '_blank');
+      } else {
+          // Otherwise, show the friendly dialog
+          setPendingExternalUrl(url);
+      }
+  };
+
+  const confirmExternalLink = () => {
+      if (pendingExternalUrl) {
+          // Mark as seen so it doesn't appear again
+          localStorage.setItem('mz_external_notice_seen', 'true');
+          window.open(pendingExternalUrl, '_blank');
+          setPendingExternalUrl(null);
+      }
   };
 
   const generateCorePlugin = () => {
@@ -213,7 +242,7 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
                     <button onClick={() => setActiveModal('share')} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-indigo-400 transition-colors">
                         <Share2 size={13} className="shrink-0" /> Share
                     </button>
-                    <button onClick={() => window.open('https://github.com', '_blank')} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-indigo-400 transition-colors">
+                    <button onClick={() => handleExternalLink(GITHUB_URL)} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-indigo-400 transition-colors">
                         <Github size={13} className="shrink-0" /> Source
                     </button>
                     <button onClick={() => setActiveModal('about')} className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-indigo-400 transition-colors">
@@ -455,9 +484,9 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
               <div className="mt-auto space-y-2">
                 <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-[0.2em] block text-center mb-1">Download Mirrors</span>
                 <div className="flex gap-2">
-                   <button onClick={() => window.open('https://mega.nz/folder/sKNTWZqQ#doGLWeBTgEC0VT842UPI4g', '_blank')} className="flex-1 bg-red-950/20 hover:bg-red-900/40 border border-red-900/30 text-red-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">Mega.nz</button>
-                   <button onClick={() => window.open('https://drive.google.com/drive/folders/1ZDk6uAsAx-BcUMEBhBsy6nORkZP7vRgF?usp=drive_link', '_blank')} className="flex-1 bg-blue-950/20 hover:bg-blue-900/40 border border-blue-900/30 text-blue-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">Google</button>
-                   <button onClick={() => window.open('https://www.mediafire.com/folder/fv9es8v0fqguf/MZ_Particle_Architect', '_blank')} className="flex-1 bg-cyan-950/20 hover:bg-cyan-900/40 border border-cyan-900/30 text-cyan-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">MediaFire</button>
+                   <button onClick={() => handleExternalLink('https://mega.nz/folder/sKNTWZqQ#doGLWeBTgEC0VT842UPI4g')} className="flex-1 bg-red-950/20 hover:bg-red-900/40 border border-red-900/30 text-red-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">Mega.nz</button>
+                   <button onClick={() => handleExternalLink('https://drive.google.com/drive/folders/1ZDk6uAsAx-BcUMEBhBsy6nORkZP7vRgF?usp=drive_link')} className="flex-1 bg-blue-950/20 hover:bg-blue-900/40 border border-blue-900/30 text-blue-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">Google</button>
+                   <button onClick={() => handleExternalLink('https://www.mediafire.com/folder/fv9es8v0fqguf/MZ_Particle_Architect')} className="flex-1 bg-cyan-950/20 hover:bg-cyan-900/40 border border-cyan-900/30 text-cyan-400 py-2 rounded-lg text-[9px] font-bold uppercase transition-all shadow-sm">MediaFire</button>
                 </div>
               </div>
             </div>
@@ -490,13 +519,74 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ config, presets }) => {
                 </div>
               </div>
               <button 
-                onClick={() => window.open('https://github.com', '_blank')}
+                onClick={() => handleExternalLink(GITHUB_URL)}
                 className="mt-auto bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all border border-zinc-700/50 shadow-md flex items-center justify-center gap-2"
               >
                 <ExternalLink size={12} /> View Code
               </button>
             </div>
           </div>
+        </Modal>
+
+        {/* EXTERNAL LINK NOTICE MODAL (FRIENDLY) */}
+        <Modal
+            isOpen={!!pendingExternalUrl}
+            onClose={() => setPendingExternalUrl(null)}
+            title="External Link"
+            icon={ExternalLink}
+            maxWidth="max-w-lg"
+        >
+            <div className="w-full space-y-6">
+                <p className="text-zinc-400 text-sm leading-relaxed mt-2 text-center">
+                    You are navigating to an external website.
+                </p>
+                
+                <div className="bg-zinc-950 p-2 rounded-xl border border-zinc-800 flex items-center gap-2 shadow-inner group focus-within:border-indigo-500/50 transition-colors">
+                    <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-zinc-900 border border-zinc-800 rounded-lg group-focus-within:border-indigo-500/30">
+                        <Globe size={18} className="text-zinc-500 group-focus-within:text-indigo-400 transition-colors"/>
+                    </div>
+                    
+                    <input 
+                        type="text" 
+                        readOnly 
+                        value={pendingExternalUrl || ''} 
+                        className="bg-transparent border-none outline-none text-indigo-400 text-xs font-mono w-full h-full px-2 py-2 focus:ring-0 selection:bg-indigo-500/30"
+                        onClick={(e) => e.currentTarget.select()}
+                    />
+
+                    <button 
+                        onClick={() => {
+                            if(pendingExternalUrl) {
+                                navigator.clipboard.writeText(pendingExternalUrl);
+                                setExternalCopied(true);
+                                setTimeout(() => setExternalCopied(false), 2000);
+                            }
+                        }}
+                        className="w-10 h-10 shrink-0 flex items-center justify-center hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-zinc-200 transition-all active:scale-95"
+                        title="Copy Link"
+                    >
+                        {externalCopied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                    <button 
+                        onClick={() => setPendingExternalUrl(null)}
+                        className="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all"
+                    >
+                        Stay Here
+                    </button>
+                    <button 
+                        onClick={confirmExternalLink}
+                        className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg"
+                    >
+                        Open Link
+                    </button>
+                </div>
+                <p className="text-zinc-600 text-[9px] font-bold uppercase tracking-widest opacity-60 text-center">
+                    This notice will not appear again.
+                </p>
+            </div>
         </Modal>
     </div>
   );

@@ -1,5 +1,5 @@
 {
-  "name": "(WEB, STABLE) MZ Babylon Particle Architect",
+  "name": "MZ Babylon Particle Architect",
   "description": "A visual design tool to generate Babylon.js particle effects specifically formatted for RPG Maker MZ plugins, powered by Gemini AI.",
   "requestFramePermissions": []
 }

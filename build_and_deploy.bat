@@ -1,8 +1,9 @@
+
 @echo off
 setlocal
 echo.
 echo ============================================================
-echo   MZ Particle Architect - Neocities Build Tool
+echo   MZ Particle Architect - Web Builder
 echo ============================================================
 echo.
 
@@ -14,10 +15,16 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-:: Install dependencies if node_modules doesn't exist
+:: Install dependencies if needed
 if not exist node_modules (
     echo [INFO] Installing project dependencies...
     call npm install
+)
+
+:: Clean previous build
+if exist dist (
+    echo [INFO] Cleaning previous dist folder...
+    rmdir /s /q dist
 )
 
 :: Run the build
@@ -37,12 +44,13 @@ echo ============================================================
 echo   BUILD SUCCESSFUL!
 echo ============================================================
 echo.
-echo   Your production-ready files are in the 'dist' folder.
+echo   Your web-ready files are in the 'dist' folder.
 echo.
-echo   STEPS TO DEPLOY:
-echo   1. Log in to your Neocities dashboard.
-echo   2. Upload all files INSIDE the 'dist' folder to your root.
-echo   3. Alternatively, use 'neocities-cli' to push the dist folder.
+echo   STEPS TO DEPLOY TO NEOCITIES:
+echo   1. Go to dashboard.neocities.org
+echo   2. Delete existing index.html/assets if creating a fresh update.
+echo   3. Drag and drop the CONTENTS of the 'dist' folder into your site root.
+echo      (This includes index.html and the 'assets' folder).
 echo.
 echo ============================================================
 echo.
